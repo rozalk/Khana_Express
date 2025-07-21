@@ -1,0 +1,679 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Khana Express</title>
+  <link rel="icon" type="image/png" href="./logoo.png" >
+<style>
+   * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #fff8f0;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    /* === Header / Navbar === */
+    header {
+      background-color: #d62828;
+      padding: 15px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 26px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .logo img {
+      height: 50px;
+      margin-right: 12px;
+      
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    nav a {
+      position: relative;
+      font-size: 16px;
+      padding: 8px 0;
+      color: white;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #ffd166;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: white;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    /* === Section Base === */
+    .section {
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section h2 {
+      margin-bottom: 40px;
+      font-size: 36px;
+      text-align: center;
+      color: #003049;
+    }
+
+    /* === Home Hero === */
+    #home {
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+
+    #home .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.6)), url('./cover.jpg') center/cover no-repeat;
+      height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    #home .hero h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      margin-bottom: 20px;
+      text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+    }
+
+    #home .hero p {
+      font-size: 1.5rem;
+      max-width: 700px;
+      margin-bottom: 40px;
+      font-weight: 500;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+
+    #home .hero .btn {
+      background-color: #ffd166;
+      color: #003049;
+      padding: 14px 36px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+      transition: 0.3s ease;
+    }
+
+    #home .hero .btn:hover {
+      background-color: #ffc93c;
+    }
+
+    .moving-text {
+      font-size: 20px;
+      margin-top: 40px;
+      font-weight: bold;
+      animation: moveText 10s linear infinite;
+      color: white;
+      white-space: nowrap;
+    }
+
+    @keyframes moveText {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* === Features === */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      background: #f3e9dc;
+      padding: 60px 20px;
+      border-radius: 20px;
+      box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+    }
+
+    .feature-item {
+      text-align: center;
+      max-width: 280px;
+      margin: 20px;
+      color: #003049;
+    }
+
+    .feature-item svg {
+      width: 55px;
+      height: 55px;
+      margin-bottom: 15px;
+      fill: #d62828;
+    }
+
+    .feature-item h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #d62828;
+    }
+
+    .feature-item p {
+      font-size: 15px;
+      color: #444;
+    }
+
+    /* === Food Cards === */
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .food-item {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .food-item:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .food-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .food-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .food-item .content {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .food-item .content h3 {
+      font-size: 22px;
+      color: #d62828;
+      transition: color 0.3s ease;
+    }
+
+    .food-item:hover .content h3 {
+      color: #f77f00;
+    }
+
+    .food-item .content .restro-name {
+      font-size: 14px;
+      font-style: italic;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .food-item .content p {
+      font-size: 18px;
+      font-weight: bold;
+      color: #003049;
+      transition: color 0.3s ease;
+    }
+
+    .food-item:hover .content p {
+      color: #6a040f;
+    }
+
+    .food-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      box-shadow: 0 0 0 transparent;
+      transition: box-shadow 0.4s ease;
+      z-index: -1;
+    }
+
+    .food-item:hover::before {
+      box-shadow: 0 0 20px rgba(255, 213, 102, 0.4);
+    }
+
+    /* === About Section === */
+    #about p {
+      text-align: center;
+      font-size: 18px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* === Footer === */
+    footer {
+      background-color: #003049;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      position: relative;
+      font-size: 15px;
+    }
+
+    footer a {
+      color: #ffd166;
+      font-weight: bold;
+      transition: color 0.3s ease;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #ffa500;
+      text-decoration: underline;
+    }
+
+    footer p {
+      margin-bottom: 8px;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 4px;
+      width: 80px;
+      background: #ffd166;
+      border-radius: 2px;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 768px) {
+      #home .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      #home .hero p {
+        font-size: 1.1rem;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        background-color: #d62828;
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      nav a {
+        margin: 10px 0;
+      }
+
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+    }
+</style>
+
+
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="./logoo.png" alt="Khana Express Logo"  />
+      Khana Express
+    </div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#amma-ko-vansa">Amma ko Vansa</a>
+      <a href="#fast-food">Fast Food</a>
+      <a href="#hotels">Hotels</a>
+      <a href="#others">Others</a>
+      <a href="#registration">Registration </a>
+      <a href="#about">About</a>
+      <!-- <a href="#contact">Contact</a> -->
+    </nav>
+  </header>
+
+  <section id="home">
+    <div class="hero">
+      <h1>Welcome to Khana Express</h1>
+      <p>Delicious Nepali and Fast Foods delivered at your doorstep! Explore our traditional flavors and modern bites all in one place.</p>
+      <a href="#amma-ko-vansa" class="btn">Order Now</a>
+      <!-- <div class="moving-text" style="color: white;">Experience the taste of tradition and modern delight!</div> -->
+    </div>
+
+    <div class="features">
+      <div class="feature-item">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 2a14 14 0 0114 14v12a14 14 0 11-28 0V16A14 14 0 0132 2z"/></svg>
+        <h3>Fresh Ingredients</h3>
+        <p>We use only fresh, high-quality ingredients to ensure great taste and health.</p>
+      </div>
+      <div class="feature-item">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" stroke="#d62828" stroke-width="4" fill="none"/><path d="M16 32l8 8 16-16" stroke="#d62828" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3>Quick Delivery</h3>
+        <p>Hot and fresh meals delivered fast right to your doorstep.</p>
+      </div>
+      <div class="feature-item">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M50 14H14a4 4 0 00-4 4v28a4 4 0 004 4h36a4 4 0 004-4V18a4 4 0 00-4-4zM32 42a8 8 0 110-16 8 8 0 010 16z"/></svg>
+        <h3>Authentic Flavors</h3>
+        <p>Experience genuine Nepali traditional dishes made with love.</p>
+      </div>
+    </div>
+
+  
+  </section>
+
+  <section id="amma-ko-vansa" class="section">
+    <h2>Amma ko Vansa (Nepali Local Food)</h2>
+    <div class="food-grid">
+      <div class="food-item">
+        <img src="./dalbhat.webp" alt="Dal Bhat">
+        <div class="content">
+          <h3>Dal Bhat</h3>
+          <div class="restro-name">Khana Express</div>
+          <p>Rs. 500</p>
+        </div>
+      </div>
+      <div class="food-item">
+        <img src="./chukauni.jpeg" alt="Chukauni">
+        <div class="content">
+          <h3>Chukauni</h3>
+          <div class="restro-name">Khana Express</div>
+          <p>Rs. 100</p>
+        </div>
+      </div>
+      <div class="food-item">
+        <img src="./dhindo.jpeg" alt="Dhindo">
+        <div class="content">
+          <h3>Dhindo</h3>
+          <div class="restro-name">Khana Express</div>
+          <p>Rs. 500</p>
+        </div>
+      </div>
+      <div class="food-item">
+        <img src="./yomari.jpeg" alt="Yomari">
+        <div class="content">
+          <h3>Yomari</h3>
+          <div class="restro-name">Khana Express</div>
+          <p>Rs. 100</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fast-food" class="section">
+    <h2>Fast Food</h2>
+    <div class="food-grid">
+      <div class="food-item">
+        <img src="./burger.jpg" alt="Burger">
+        <div class="content">
+          <h3>Burger</h3>
+          <div class="restro-name">Khana Express</div>
+          <p>Rs. 220</p>
+        </div>
+      </div>
+      <div class="food-item">
+        <img src="./pizza.jpeg" alt="Pizza">
+        <div class="content">
+          <h3>Pizza</h3>
+          <div class="restro-name">Khana Express</div>
+          <p>Rs. 450</p>
+        </div>
+      </div>
+      <div class="food-item">
+        <img src="./french.jpeg" alt="French Fries">
+        <div class="content">
+          <h3>French Fries</h3>
+          <div class="restro-name">Khana Express</div>
+          <p>Rs. 140</p>
+        </div>
+      </div>
+      <div class="food-item">
+        <img src="./momo.jpeg" alt="Momo">
+        <div class="content">
+          <h3>Momo</h3>
+          <div class="restro-name">Khana Express</div>
+          <p>Rs. 140</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hotels" class="section">
+  <h2>Hotels</h2>
+  <div class="food-grid">
+    <div class="food-item">
+      <img src="./hideout.jpeg" alt="hideout">
+      <div class="content">
+        <h3>Hideout Restro</h3>
+ 
+        <p>Butwal</p>
+      </div>
+    </div>
+    <div class="food-item">
+      <img src="./eldorado.jpeg" alt="ELDORADO">
+      <div class="content">
+        <h3>El Dorado Avenue</h3>
+      
+        <p>Butwal</p>
+      </div>
+    </div>
+    <div class="food-item">
+      <img src="./galaxy.jpeg" alt="galaxy">
+      <div class="content">
+        <h3>Galaxy Cafe</h3>
+
+        <p>Butwal</p>
+      </div>
+    </div>
+    <div class="food-item">
+      <img src="./chiya.jpg" alt="chiya">
+      <div class="content">
+        <h3>ChiyaGram</h3>
+
+        <p>Butwal</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <section id="others" class="section">
+  <h2>Others</h2>
+  <div class="food-grid">
+    <div class="food-item">
+      <img src="./alu.jpeg" alt="Alu">
+      <div class="content">
+        <h3>Aloo</h3>
+        <div class="restro-name">Khana Express</div>
+        <p>Rs. 120/kg</p>
+      </div>
+    </div>
+    <div class="food-item">
+      <img src="./chana.webp" alt="Chana">
+      <div class="content">
+        <h3>Chana</h3>
+        <div class="restro-name">Khana Express</div>
+        <p>Rs. 80/kg</p>
+      </div>
+    </div>
+     <div class="food-item">
+      <img src="./onion.jpeg" alt="Chana">
+      <div class="content">
+        <h3>Onion</h3>
+        <div class="restro-name">Khana Express</div>
+        <p>Rs. 90/kg</p>
+      </div>
+    </div>
+     <div class="food-item">
+      <img src="./maize.jpeg" alt="Chana">
+      <div class="content">
+        <h3>Maize</h3>
+        <div class="restro-name">Khana Express</div>
+        <p>Rs. 150/kg</p>
+      </div>
+    </div>
+    
+    
+  </div>
+</section>
+
+
+<section id="registration" class="section">
+  <h2 style="text-align: center; margin-bottom: 30px;">Registration</h2>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
+
+    <!-- Delivery Rider Form -->
+    <div style="background: white; padding: 20px; border-radius: 10px; width: 300px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <h3 style="text-align: center;">Delivery Rider</h3>
+      <form>
+        <label>Name:</label><br>
+        <input type="text" style="width: 100%; padding: 8px;" required><br><br>
+
+        <label>Phone:</label><br>
+        <input type="text" style="width: 100%; padding: 8px;" required><br><br>
+
+        <label>Vehicle Type:</label><br>
+        <input type="text" style="width: 100%; padding: 8px;" required><br><br>
+
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #ff6600; color: white; border: none;">Register</button>
+      </form>
+    </div>
+
+    <!-- Grocery Form -->
+    <div style="background: white; padding: 20px; border-radius: 10px; width: 300px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <h3 style="text-align: center;">Grocery</h3>
+      <form>
+        <label>Store Name:</label><br>
+        <input type="text" style="width: 100%; padding: 8px;" required><br><br>
+
+        <label>Owner Name:</label><br>
+        <input type="text" style="width: 100%; padding: 8px;" required><br><br>
+
+        <label>Location:</label><br>
+        <input type="text" style="width: 100%; padding: 8px;" required><br><br>
+
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #4caf50; color: white; border: none;">Register</button>
+      </form>
+    </div>
+
+    <!-- Company Form -->
+    <div style="background: white; padding: 20px; border-radius: 10px; width: 300px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <form>
+        <label>Company Name:</label><br>
+        <input type="text" style="width: 100%; padding: 8px;" required><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" style="width: 100%; padding: 8px;" required><br><br>
+
+        <label>Address:</label><br>
+        <input type="text" style="width: 100%; padding: 8px;" required><br><br>
+
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #2196f3; color: white; border: none;">Register</button>
+      </form>
+    </div>
+
+  </div>
+</section> 
+
+
+
+  <section id="about" class="section">
+    <h2>About Khana Express</h2>
+    <p style="text-align:center; font-size: 18px; max-width: 800px; margin: 0 auto;">
+      Khana Express is your go-to destination for delicious, freshly-prepared Nepali and fast foods. We aim to bring the taste of tradition and modern flavor right to your home with quick delivery and quality service.
+    </p>
+    <!-- <h2>Contact</h2>
+     <form style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+    <label for="name" style="font-weight: bold;">Name:</label>
+    <input type="text" id="name" name="name" placeholder="Your name"
+           style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;" required>
+
+    <label for="email" style="font-weight: bold;">Email:</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com"
+           style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;" required>
+
+    <label for="message" style="font-weight: bold;">Message:</label>
+    <textarea id="message" name="message" rows="5" placeholder="Write your message..."
+              style="padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; resize: vertical;" required></textarea>
+
+    <button type="submit"
+            style="padding: 12px; background-color: #ff6600; color: white; border: none; font-size: 16px; border-radius: 5px; cursor: pointer;">
+      Send
+    </button>
+  </form> -->
+  </section>
+
+
+
+  <footer>
+    <p>&copy; 2025 Khana Express. All rights reserved.<br>
+    Made by <a href="https://np.linkedin.com/in/rojal-karki-127a84274" target="_blank" rel="noopener noreferrer">Rojal Karki</a></p>
+  </footer>
+
+   <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navbar');
+      nav.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
